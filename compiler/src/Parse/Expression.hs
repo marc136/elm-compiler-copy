@@ -12,7 +12,7 @@ import qualified AST.Source as Src
 import qualified Parse.Keyword as Keyword
 import qualified Parse.Number as Number
 import qualified Parse.Pattern as Pattern
-import qualified Parse.Shader as Shader
+-- import qualified Parse.Shader as Shader
 import qualified Parse.Space as Space
 import qualified Parse.Symbol as Symbol
 import qualified Parse.Type as Type
@@ -35,7 +35,7 @@ term =
         [ variable start >>= accessible start
         , string start
         , number start
-        , Shader.shader start
+        -- , Shader.shader start -- TODO enable GLSL feature again
         , list start
         , record start >>= accessible start
         , tuple start >>= accessible start
