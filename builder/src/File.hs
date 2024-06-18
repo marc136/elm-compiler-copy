@@ -1,7 +1,7 @@
 module File
   ( Time
-  , getTime
-  , zeroTime
+  -- , getTime
+  -- , zeroTime
   , writeBinary
   , readBinary
   , writeUtf8
@@ -24,8 +24,8 @@ import qualified Data.ByteString.Builder as B
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Fixed as Fixed
 import qualified Data.List as List
-import qualified Data.Time.Clock as Time
-import qualified Data.Time.Clock.POSIX as Time
+-- import qualified Data.Time.Clock as Time
+-- import qualified Data.Time.Clock.POSIX as Time
 import qualified Foreign.ForeignPtr as FPtr
 import GHC.IO.Exception (IOException, IOErrorType(InvalidArgument))
 import qualified System.Directory as Dir
@@ -43,18 +43,18 @@ newtype Time = Time Fixed.Pico
   deriving (Eq, Ord)
 
 
-getTime :: FilePath -> IO Time
-getTime path =
-  fmap
-    (Time . Time.nominalDiffTimeToSeconds . Time.utcTimeToPOSIXSeconds)
-    (Dir.getModificationTime path)
-
-
-zeroTime :: Time
-zeroTime =
-  Time 0
-
-
+-- getTime :: FilePath -> IO Time
+-- getTime path =
+--   fmap
+--     (Time . Time.nominalDiffTimeToSeconds . Time.utcTimeToPOSIXSeconds)
+--     (Dir.getModificationTime path)
+--
+--
+-- zeroTime :: Time
+-- zeroTime =
+--   Time 0
+--
+--
 instance Binary.Binary Time where
   put (Time time) = Binary.put time
   get = Time <$> Binary.get
