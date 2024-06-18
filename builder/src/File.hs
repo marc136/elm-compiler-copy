@@ -1,7 +1,7 @@
 module File
   ( Time
   -- , getTime
-  -- , zeroTime
+  , zeroTime
   , writeBinary
   , readBinary
   , writeUtf8
@@ -50,11 +50,11 @@ newtype Time = Time Fixed.Pico
 --     (Dir.getModificationTime path)
 --
 --
--- zeroTime :: Time
--- zeroTime =
---   Time 0
---
---
+zeroTime :: Time
+zeroTime =
+  Time 0
+
+
 instance Binary.Binary Time where
   put (Time time) = Binary.put time
   get = Time <$> Binary.get
