@@ -1,5 +1,7 @@
 Fork of https://github.com/elm/compiler
 
+IMPORTANT: You can no longer compile this directly, because I replaced the auto-generated `Paths_elm` with `Paths_ulm` that is used by the parent `ulm-wasm` compiler repo.
+
 # Elm
 
 A delightful language for reliable webapps.
