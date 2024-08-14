@@ -8,8 +8,8 @@ module Stuff
   , elmo
   , temp
   , findRoot
-  , withRootLock
-  , withRegistryLock
+  -- , withRootLock
+  -- , withRegistryLock
   , PackageCache
   , getPackageCache
   , registry
@@ -22,7 +22,7 @@ module Stuff
 
 import qualified System.Directory as Dir
 import qualified System.Environment as Env
-import qualified System.FileLock as Lock
+-- import qualified System.FileLock as Lock
 import qualified System.FilePath as FP
 import System.FilePath ((</>), (<.>))
 
@@ -120,16 +120,16 @@ findRootHelp dirs =
 -- LOCKS
 
 
-withRootLock :: FilePath -> IO a -> IO a
-withRootLock root work =
-  do  let dir = stuff root
-      Dir.createDirectoryIfMissing True dir
-      Lock.withFileLock (dir </> "lock") Lock.Exclusive (\_ -> work)
+-- withRootLock :: FilePath -> IO a -> IO a
+-- withRootLock root work =
+--   do  let dir = stuff root
+--       Dir.createDirectoryIfMissing True dir
+--       Lock.withFileLock (dir </> "lock") Lock.Exclusive (\_ -> work)
 
 
-withRegistryLock :: PackageCache -> IO a -> IO a
-withRegistryLock (PackageCache dir) work =
-  Lock.withFileLock (dir </> "lock") Lock.Exclusive (\_ -> work)
+-- withRegistryLock :: PackageCache -> IO a -> IO a
+-- withRegistryLock (PackageCache dir) work =
+--   Lock.withFileLock (dir </> "lock") Lock.Exclusive (\_ -> work)
 
 
 
