@@ -72,7 +72,7 @@ executable ulm
     import:         shared
     ghc-options:
         -Wall -Wunused-packages -no-hs-main -optl-mexec-model=reactor
-        "-optl-Wl,--export=hs_init,--export=wip,--export=buildArtifacts,--export=compile,--export=make"
+        "-optl-Wl,--export=hs_init,--export=wip,--export=buildArtifacts,--export=compile,--export=make,--export=addPackage"
 
     hs-source-dirs: exe-wasm
     main-is:        WasmMake.hs

@@ -33,6 +33,14 @@ foreign export javascript "buildArtifacts" buildArtifacts :: IO ()
 
 buildArtifacts = putStrLn "TODO buildArtifacts"
 
+foreign export javascript "addPackage" addPackage :: Wasm.JSString -> IO Wasm.JSString
+
+addPackage :: Wasm.JSString -> IO Wasm.JSString
+addPackage jsString = do
+  let pkg = Wasm.fromJSString jsString
+  result <- Ulm.Install.installJson pkg
+  pure $ encodeJson result
+
 foreign export javascript "make"
   makeWasm :: Wasm.JSString -> IO Wasm.JSString
 

@@ -21,6 +21,9 @@ import Ulm.Details qualified
 import Ulm.Paths qualified
 import Ulm.Reporting.Exit qualified
 
+-- The functions install and instalJson don't actually install packages.
+-- They rather check if the package exists in the file system.
+
 installJson :: String -> IO Json.Encode.Value
 installJson packageName =
   -- I saw no good constructor, so I decode it from String
