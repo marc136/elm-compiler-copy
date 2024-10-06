@@ -2,3 +2,9 @@
 *~
 *.swp
 *.swo
+
+# GHC
+dist-newstyle
+
+# TODO when this is ready, add distribution-ready compressed wasm binaries to the repo
+dist
