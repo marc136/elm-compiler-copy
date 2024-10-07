@@ -81,7 +81,6 @@ executable ulm
     build-depends:
         ulm,
         bytestring,
-        containers,
         utf8-string,
 
     -- Cannot run tests with `wasm32-wasi-cabal` but default `cabal test` chokes on the
@@ -194,10 +193,15 @@ library
         Elm.Compiler.Imports
         Elm.Compiler.Type
         Elm.Compiler.Type.Extract
+        Elm.Constraint
+        Elm.Docs
         Elm.Float
         Elm.Interface
         Elm.Kernel
+        Elm.Licenses
+        Elm.Magnitude
         Elm.ModuleName
+        Elm.Outline
         Elm.String
         Elm.Version
         File
@@ -243,6 +247,7 @@ library
         Reporting.Report
         Reporting.Result
         Reporting.Suggest
+        Reporting.Task
         Reporting.Warning
         Type.Constrain.Expression
         Type.Constrain.Module
@@ -255,13 +260,5 @@ library
         Type.Unify
         Type.UnionFind
 
-        -- Files inside ulm-wasm
-
         -- wip
-        Elm.Constraint
-        Elm.Docs
-        Elm.Licenses
-        Elm.Magnitude
-        Elm.Outline
-        Reporting.Task
         CompileToStringHelper
