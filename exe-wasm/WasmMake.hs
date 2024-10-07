@@ -9,10 +9,11 @@ import Debug.Trace
 import Elm.Package qualified
 -- See https://gitlab.haskell.org/ghc/ghc/-/commit/317a915bc46fee2c824d595b0d618057bf7fbbf1#82b5a034883a3ede9540d6423738da627660f860
 import GHC.Wasm.Prim qualified as Wasm
+import Json.Encode ((==>))
 import Json.Encode qualified
-import Ulm.Details qualified
 import Ulm.Install qualified
 import Ulm.Make qualified
+import Ulm.Packages qualified
 
 main :: IO ()
 main = mempty
@@ -27,11 +28,24 @@ wipJs jsString =
       -- source = BSU.fromString $ trace "wipJs" $ traceShowId str
       str = Wasm.fromJSString jsString
    in do
-        fmap encodeJson $ Ulm.Install.installJson str
+        -- TODO
+        fmap encodeJson $ Ulm.Packages.readListJson Ulm.Packages.NewestKnownVersion
 
 foreign export javascript "buildArtifacts" buildArtifacts :: IO ()
 
 buildArtifacts = putStrLn "TODO buildArtifacts"
+
+foreign export javascript "getPackages" getPackages :: Wasm.JSString -> IO Wasm.JSString
+
+getPackages :: Wasm.JSString -> IO Wasm.JSString
+getPackages scope = do
+  case Wasm.fromJSString scope of
+    "all" ->
+      fmap encodeOk $ Ulm.Packages.readListJson Ulm.Packages.AllKnownVersions
+    "newest" ->
+      fmap encodeOk $ Ulm.Packages.readListJson Ulm.Packages.NewestKnownVersion
+    other ->
+      pure $ encodeErrString ("Option '" ++ other ++ "' is not supported.")
 
 foreign export javascript "addPackage" addPackage :: Wasm.JSString -> IO Wasm.JSString
 
@@ -61,6 +75,28 @@ compileWasm jsString =
         trace "wrote sample file" $ Data.ByteString.Builder.writeFile "/wasm-can-write" (Data.ByteString.Builder.stringUtf8 "horst")
         outcome <- Ulm.Make.compileThis source
         pure $ encodeJson $ Ulm.Make.outcomeToJson source outcome
+
+-- RESULT HELPERS
+
+encodeOk :: Json.Encode.Value -> Wasm.JSString
+encodeOk ok =
+  encodeJson $ toOk ok
+
+toOk :: Json.Encode.Value -> Json.Encode.Value
+toOk ok =
+  Json.Encode.object
+    [ "result" ==> Json.Encode.chars "ok",
+      "data" ==> ok
+    ]
+
+encodeErrString :: [Char] -> Wasm.JSString
+encodeErrString chars =
+  encodeJson $
+    Json.Encode.object
+      [ "result" ==> Json.Encode.chars "error",
+        "error" ==> Json.Encode.chars chars,
+        "data" ==> Json.Encode.null
+      ]
 
 encodeJson :: Json.Encode.Value -> Wasm.JSString
 encodeJson value =

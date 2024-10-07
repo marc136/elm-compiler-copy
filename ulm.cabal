@@ -72,7 +72,7 @@ executable ulm
     import:         shared
     ghc-options:
         -Wall -Wunused-packages -no-hs-main -optl-mexec-model=reactor
-        "-optl-Wl,--export=hs_init,--export=wip,--export=buildArtifacts,--export=compile,--export=make,--export=addPackage"
+        "-optl-Wl,--export=hs_init,--export=wip,--export=buildArtifacts,--export=compile,--export=make,--export=addPackage,--export=getPackages"
 
     hs-source-dirs: exe-wasm
     main-is:        WasmMake.hs
@@ -153,6 +153,7 @@ library
         Ulm.Install
         Ulm.Make
         Ulm.Paths
+        Ulm.Packages
         Ulm.ReadArtifacts
         Ulm.Reporting
         Ulm.Reporting.Error
